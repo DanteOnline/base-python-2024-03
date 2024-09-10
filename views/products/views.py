@@ -34,13 +34,13 @@ def get_products_list():
     methods=["GET", "POST"],
     endpoint="add",
 )
-def add_product():
+def add_product():  # pylint:disable=missing-function-docstring
     if request.method != "POST":
         return render_template("products/add.html")
 
     product_name = request.form.get("product-name") or "Default"
     product_price = request.form.get("product-price") or 0
-    # TODO: validate values and remove defaults
+
 
     product = storage.create(
         product_create=ProductCreate(
@@ -54,6 +54,11 @@ def add_product():
 
 @products_app.route("/<int:product_id>/", endpoint="details")
 def get_product_by_id(product_id: int):
+    """
+    Get product by id
+    :param product_id:
+    :return:
+    """
     product = storage.get_by_id(product_id)
     if not product:
         # response = Response(render_template("error.html"), status=404)
